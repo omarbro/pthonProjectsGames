@@ -1,15 +1,21 @@
-
-
+from termcolor import colored
+X= 'X'
+O= 'O'
 board = [
     [' ',' ',' '],
     [' ',' ',' '],
     [' ',' ',' ']
 ]
 
+def cell(mark):
+    color= 'red' if mark == X else 'green'
+    return colored(mark, color)
+
+
 def print_board(board):
     i=1
     for row in board:
-        print(f" {row[0]} | {row[1]} | {row[2]}")
+        print(f" {cell(row[0])} | {cell(row[1])} | {cell(row[2])}")
         if(i<3):
             print("---|---|---")
         i=i+1
@@ -30,6 +36,7 @@ def check_winner(board):
 
     return False
 
+
 def board_is_full(board):
     for row in board:
         if ' ' in row:
@@ -37,19 +44,35 @@ def board_is_full(board):
 
     return True
 
-def main():
-    print_board(board)
-    current_player= "X"
+
+def get_position(prompt):
+    try:
+        position =int(input(prompt))
+        if position < 0 or position > 2:
+            raise ValueError
+        return position
+    except ValueError:
+        print("Please enter a valid number 0-2")
+
+
+def get_move(current_player):
     while True:
         print(f"Player: {current_player}'s turn")
-        row=int(input("Enter row (0-2) :"))
-        col=int(input("Enter column (0-2) :"))
+        row=get_position("Enter a row (0-2) : ")
+        col=get_position("Enter a column (0-2) : ")
 
         if board[row][col] == ' ':
             board[row][col]= current_player
-        else:
-            print("The place is already occupied")
-            continue
+            break
+
+        print("The place is already occupied")
+
+
+def main():
+    print_board(board)
+    current_player= X
+    while True:
+        get_move(current_player)
         print_board(board)
         if check_winner(board):
             print(f"Congratulations! {current_player} won!")
@@ -59,7 +82,7 @@ def main():
             print("The board is full. Match tie..")
             break
 
-        current_player= "O" if current_player=="X" else "X"
+        current_player= O if current_player== X else X
 
 
 if __name__ == "__main__":
