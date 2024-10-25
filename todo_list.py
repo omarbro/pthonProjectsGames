@@ -1,6 +1,3 @@
-from dis import disco
-
-
 def print_menu():
     print("To-do list menu: ")
     print("0. View task")
@@ -14,7 +11,7 @@ def get_choice():
     try:
         while True:
             choice =int(input(" Enter your choice: "))
-            if (choice not in choices):
+            if choice not in choices:
                 print("Invalid choice, Try again. ")
                 continue
             return choice
