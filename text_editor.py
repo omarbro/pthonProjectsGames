@@ -13,13 +13,21 @@ def main():
     except OSError:
         print(f" File {filename} could not be opened..")
 
+    print("Write to the file . Enter save in a new line to save and exit")
     content = []
-
     while True:
         line= input()
         if line == 'save' or line == 'SAVE':
             break
         content.append(line)
+
+    try:
+        with open(filename, "w") as file:
+            file.writelines(content)
+            #file.write("\n".join(content)) -- it will join all the list elements as one str with new line each
+            print(f" File {filename} has been saved")
+    except OSError:
+        print(f" File {filename} could not be saved..")
 
 
 
