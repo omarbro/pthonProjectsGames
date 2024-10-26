@@ -1,33 +1,43 @@
 import os
-def main():
-    filename= input(" Enter your file name to open/create : ").strip()
 
-    try:
-        if os.path.exists(filename):
-            with open(filename, "r") as file:
-                content = file.read()
-                print(content)
-        else:
-            with open(filename, "w") as file:
-                pass # we used pass as we can't keep with blck empty.
-    except OSError:
-        print(f" File {filename} could not be opened..")
+from matplotlib import lines
 
+
+def read_file(filename):
+    with open(filename, "r") as file:
+        return file.read()
+
+
+def write_file(filename, content):
+    with open(filename, "w") as file:
+        file.writelines(content)
+
+
+def get_user_text():
     print("Write to the file . Enter save in a new line to save and exit")
-    content = []
+    lines = []
     while True:
         line= input()
         if line == 'save' or line == 'SAVE':
             break
-        content.append(line)
+        lines.append(line)
+    return lines
 
+def main():
+    filename= input(" Enter your file name to open/create : ").strip()
     try:
-        with open(filename, "w") as file:
-            file.writelines(content)
-            #file.write("\n".join(content)) -- it will join all the list elements as one str with new line each
-            print(f" File {filename} has been saved")
+        if os.path.exists(filename):
+            print(read_file(filename))
+        else:
+            write_file(filename, '')
+
+        content= get_user_text()
+        write_file(filename, content)
+        #file.write("\n".join(content)) -- it will join all the list elements as one str with new line each
+        print(f" File {filename} has been saved")
+
     except OSError:
-        print(f" File {filename} could not be saved..")
+        print(f" File {filename} could not be opened ..")
 
 
 
