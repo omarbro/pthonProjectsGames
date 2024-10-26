@@ -1,6 +1,6 @@
 import os
 def main():
-    filename= input(" Enter your file name to open/create : ")
+    filename= input(" Enter your file name to open/create : ").strip()
 
     try:
         if os.path.exists(filename):
@@ -12,6 +12,15 @@ def main():
                 pass # we used pass as we can't keep with blck empty.
     except OSError:
         print(f" File {filename} could not be opened..")
+
+    content = []
+
+    while True:
+        line= input()
+        if line == 'save' or line == 'SAVE':
+            break
+        content.append(line)
+
 
 
 
